@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monster Slayer</title>
+    <script src="vue.js"></script>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+    {{ gameOver() }}
+    <section class="row">
+        <div class="small-6 columns">
+            <h1 class="text-center">YOU</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;"
+                 :style='{width: playerScore + "%"}'>
+                    {{ playerScore }} %
+                </div>
+            </div>
+        </div>
+        <div class="small-6 columns">
+            <h1 class="text-center">MONSTER</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;"
+                :style="{width: monsterScore + '%'}">
+                    {{ monsterScore }} %
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <template v-if="!gameIsOn">
+        <section class="row controls">
+            <div class="small-12 columns">
+                <button id="start-game" @click="startNewGame">START NEW GAME</button>
+            </div>
+        </section>
+    </template>
+
+    <template v-if="gameIsOn">
+        <section class="row controls">
+            <div class="small-12 columns">
+                <button id="attack" @click="attack()">ATTACK</button>
+                <button id="special-attack" @click="specialAttack()">SPECIAL ATTACK</button>
+                <button id="heal" @click="heal">HEAL</button>
+                <button id="give-up" @click="giveUp()">GIVE UP</button>
+            </div>
+        </section>
+    </template>
+    
+    <section class="row log" v-if="results.length > 0">
+        <div class="small-12 columns">
+            <ul v-for="result in results">
+                <template v-if="result === 'player hits monster for 8' || result === 'player hits monster for 15'">
+                        <li class="player-turn">
+                            {{ result }}
+                        </li>
+                </template>
+                
+                <template v-if="result === 'monster hits player for 5' || result === 'monster hits player for 8'">
+                    <li class="monster-turn">
+                        {{ result }}
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </section>
+    
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            playerScore: 100,
+            monsterScore: 100,
+            gameIsOn: false,
+            results: [],
+        },
+        methods: {
+            attack: function() {
+                this.playerScore -= 5;
+                this.monsterScore -= 8;
+                this.results.unshift('player hits monster for 8');
+                this.results.unshift('monster hits player for 5');
+            },
+            specialAttack: function() {
+                this.playerScore -= 8;
+                this.monsterScore -= 15;
+                this.results.unshift('player hits monster for 15');
+                this.results.unshift('monster hits player for 8');
+            },
+            heal: function() {
+                if(this.playerScore < 92) 
+                {
+                    this.playerScore += 8;
+                } else if(this.playerScore >= 92) {
+                    this.playerScore = 100;
+                }
+                
+            },
+            startNewGame: function() {
+                this.playerScore = 100;
+                this.monsterScore = 100;
+                this.results = [];
+                this.gameIsOn = true;
+            },
+            gameOver: function() {
+                if (this.monsterScore <= 0) {
+                    alert('YOU WON !!!')
+                    this.playerScore = 100;
+                    this.monsterScore = 100;
+                    this.results = [];
+                    this.gameIsOn = false;
+                }
+            },
+            giveUp: function() {
+                this.gameIsOn = false;
+            }
+        }
+    })
+</script>
+</html>

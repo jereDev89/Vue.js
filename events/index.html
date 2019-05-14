@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue - events</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <script src="vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <button v-on:click="increase(2)">Click</button>
+            <p>{{ counter }}</p>
+            <p v-on:mousemove="countCoordinates">
+                Coordinates: {{ x }} / {{ y }}
+                <span v-on:mousemove.stop>DEAD SPOTTTTTTT</span>
+            </p>
+            <input v-on:keyup.enter="alertMe"/>
+
+            
+            <br>
+            <p>Two way binding</p>
+            <!--two way binding    kada mijenjamo u inputu takoder ce projmjeniti i u data-->
+            <input v-model="surname">
+            <p>{{ surname }}</p>
+        </div>
+
+        <hr>
+
+        <div id="model">
+            
+        </div>
+    </body>
+
+    <script>
+        new Vue
+        ({
+            el: "#app",
+            data: 
+            {
+                counter: 0,
+                x: 0,
+                y: 0,
+                surname: 'Jeremic',
+            },
+            methods:
+            {
+                increase: function(step) {
+                    this.counter += step;
+                },
+                countCoordinates: function(event) {
+                    this.x = event.clientX;
+                    this.y = event.clientY;
+                },
+                alertMe: function() {
+                    alert('Op di ćes....');
+                }
+            }
+        });
+       
+    </script>
+</html>

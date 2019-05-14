@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue - Module</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <script src="vue.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+		<!-- v-if v-else -->
+		<!--
+			<p v-if="show">You can see me!</p>
+			<p v-else>Now you see me!</p>
+			<p v-show="show">Do you also see me?</p>
+			<button @click="show = !show">Switch</button>
+			
+			<template v-if="show">
+				<h1>Sa mai?</h1>
+				<p>a nis..</p>
+			</template>
+		-->
+
+		<!-- v-for -->
+		<ul>
+			<li v-for="(ingr , index) in ingredients">
+				{{ ingr }} ({{ index }})
+			</li>
+		</ul>
+		<ul>
+			<li v-for="person in persons">
+				<div v-for="(value , key , index) in person">
+					{{ key }} : {{ value }} ({{ index }})
+				</div>
+			</li>
+		</ul>
+		</div>
+    </body>
+
+    <script>
+        new Vue({
+			el: '#app',
+			data: {
+				show: true,
+				ingredients: ['meat' , 'fruits' , 'cookies'],
+				persons: [
+					{name: 'Jere' , age: 29 , color: 'blue'},
+					{name: 'Maja' , age: 30 , color: 'green'}
+				]
+			}
+		})
+    </script>
+</html>

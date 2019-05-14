@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <script src="vue.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            <h1>Moje ime je:  {{ name }}</h1>
+            <input type="text" v-on:input="changeName"/>
+
+            <h1>Godine:  {{ age }}</h1>
+            <input type="text" v-on:input="changeAge"/>
+        </div>
+    </body>
+
+    <script>
+        new Vue
+        ({
+            el: "#app",
+            data: 
+            {
+                title: 'Hello World!',
+                name: '',
+                age: '',
+            },
+            methods: 
+            {
+                changeName: function(event) {
+                    this.name = event.target.value;
+                },
+                changeAge: function(event) {
+                    this.age = event.target.value;
+                },
+            },
+        });
+    </script>
+
+</html>
